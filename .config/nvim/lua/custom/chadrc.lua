@@ -9,10 +9,8 @@
 local M = {}
 
 M.options = {
-
    -- load your options here or load module with options1
    -- user = function() end,
-
 nvChad = {
       -- updater
       update_url = "https://github.com/NvChad/NvChad",
