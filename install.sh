@@ -100,8 +100,7 @@ echo "🔁 Перезапустите терминал или выполните
 
 # 8. Установка tmux и плагинов
 echo "➡️ Проверяем tmux..."
-
-if ! command -v tmux &>/dev/null; then
+if ! hash tmux 2>/dev/null; then
   echo "➡️ Устанавливаем tmux..."
   if command -v apt &>/dev/null; then
     sudo apt install -y tmux
