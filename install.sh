@@ -146,3 +146,48 @@ sleep 2
 tmux kill-session -t __plugin_install_session || true
 
 echo "✅ Tmux плагины установлены"
+
+# Добавим ~/.local/bin в PATH в .zshrc, если его нет
+if ! grep -q 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.zshrc"; then
+  echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.zshrc"
+  echo "✅ Добавлен ~/.local/bin в PATH в .zshrc"
+fi
+
+# 10. Установка Neovim и LazyVim конфига
+echo "➡️ Проверяем Neovim..."
+
+if ! command -v nvim &>/dev/null; then
+  echo "➡️ Устанавливаем Neovim..."
+  if command -v apt &>/dev/null; then
+    sudo apt install -y neovim
+  elif command -v brew &>/dev/null; then
+    brew install neovim
+  else
+    echo "❌ Не удалось установить Neovim. Установите вручную."
+    exit 1
+  fi
+else
+  echo "✅ Neovim уже установлен"
+fi
+
+# Копирование LazyVim конфига
+echo "➡️ Копируем LazyVim конфиг в ~/.config/nvim"
+
+NVIM_CONFIG_DIR="${HOME}/.config/nvim"
+BACKUP_DIR="${HOME}/.config/nvim.backup.$(date +%s)"
+
+if [ -d "$NVIM_CONFIG_DIR" ]; then
+  echo "🔁 Создаём резервную копию старого Neovim конфига → $BACKUP_DIR"
+  mv "$NVIM_CONFIG_DIR" "$BACKUP_DIR"
+fi
+
+mkdir -p ~/.config
+cp -r "$REPO_DIR/nvim" "$NVIM_CONFIG_DIR"
+
+echo "✅ Конфиг LazyVim установлен"
+
+# Автоматическая синхронизация плагинов (опционально)
+echo "➡️ Синхронизация LazyVim плагинов..."
+nvim --headless "+Lazy! sync" +qa
+
+echo "✅ LazyVim готов к работе!"
