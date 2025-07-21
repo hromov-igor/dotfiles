@@ -1,0 +1,130 @@
+# ~/.config/starship.toml
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# ─── GLOBAL ─────────────────────────────────────────────────────
+add_newline = false
+command_timeout = 2000
+
+format = """
+[](fg:accent0)\
+$os\
+$username\
+[](fg:accent0 bg:accent1)\
+$directory\
+[](fg:accent1 bg:accent2)\
+$git_branch$git_status\
+[](fg:accent2 bg:accent3)\
+$python\
+[](fg:accent3 bg:bg1)\
+$character
+"""
+
+right_format = """
+[](fg:accent3 bg:bg1)\
+$hostname\
+[](fg:accent2 bg:accent3)\
+$conda\
+[](fg:accent2 bg:accent3)\
+$nodejs\
+[](fg:accent1 bg:accent2)\
+$cmd_duration\
+[](fg:accent1 bg:accent2)\
+$time\
+[](fg:accent1)
+"""
+
+# ─── PALETTE (GitHub Dark) ───────────────────────────────────────
+palette = 'github_dark'
+[palettes.github_dark]
+accent0 = "#2d333b"
+accent1 = "#444c56"
+accent2 = "#586069"
+accent3 = "#6e7681"
+bg1     = "#0d1117"
+fg1     = "#c9d1d9"
+red     = "#f47067"
+green   = "#57ab5a"
+yellow  = "#d29922"
+blue    = "#539bf5"
+purple  = "#986ee2"
+
+# ─── MODULES ────────────────────────────────────────────────────
+
+[os]
+style = "bg:accent0 fg:fg1"
+[os.symbols]
+Macos   = ""
+Ubuntu  = ""
+Arch    = ""
+Debian  = ""
+Linux   = ""
+Windows = ""
+
+[username]
+show_always = true
+style_user = "bg:accent0 fg:fg1"
+format = '[ $user ]($style)'
+
+[directory]
+style = "bg:accent1 fg:fg1"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "bg:accent2 fg:fg1"
+format = '[ $symbol$branch ]($style)'
+
+[git_status]
+style = "bg:accent2 fg:fg1"
+format = '[$all_status]($style)'
+
+[python]
+symbol = "🐍 "
+style = "bg:accent3 fg:fg1"
+format = '[ $symbol$version ]($style)'
+
+[conda]
+style = "bg:accent3 fg:fg1"
+format = '[ $symbol$environment ]($style)'
+
+[nodejs]
+symbol = " "
+style = "bg:accent3 fg:fg1"
+format = '[ $symbol$version ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:accent3 fg:fg1"
+format = '[ $symbol$context ]($style)'
+
+[hostname]
+ssh_only = true
+style = "fg:fg1 bg:accent3"
+format = '[ $hostname ]($style)'
+
+[status]
+disabled = false
+style = "fg:red"
+symbol = '✖'
+format = '[$symbol $status]($style)'
+
+[cmd_duration]
+disabled = false
+min_time = 0
+style = "bg:accent2 fg:green"
+format = '[$duration]($style)'
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "fg:fg1 bg:accent1"
+format = '[  $time ]($style)'
+
+[character]
+success_symbol = '[❯](bold fg:green)'
+error_symbol   = '[❯](bold fg:red)'
+
+[line_break]
+disabled = true
