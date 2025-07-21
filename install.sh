@@ -123,24 +123,24 @@ else
   git -C ~/.tmux/plugins/tpm pull
 fi
 
-# Копируем .tmux.conf
-echo "➡️ Копируем .tmux.conf в домашнюю директорию"
+# Копируем tmux конфиг в ~/.config/tmux/tmux.conf
+echo "➡️ Копируем tmux.conf → ~/.config/tmux/tmux.conf"
 
-TMUX_CONF_SOURCE="${REPO_DIR}/.tmux.conf"
-TMUX_CONF_TARGET="${HOME}/.tmux.conf"
+mkdir -p ~/.config/tmux
+TMUX_CONF_SOURCE="${REPO_DIR}/tmux.conf"
+TMUX_CONF_TARGET="${HOME}/.config/tmux/tmux.conf"
 
 if [ -f "$TMUX_CONF_TARGET" ]; then
-  echo "🔁 Резервная копия старого .tmux.conf → .tmux.conf.backup"
+  echo "🔁 Резервная копия → tmux.conf.backup"
   cp "$TMUX_CONF_TARGET" "${TMUX_CONF_TARGET}.backup"
 fi
 
 cp "$TMUX_CONF_SOURCE" "$TMUX_CONF_TARGET"
-echo "✅ Новый .tmux.conf установлен"
+echo "✅ Конфиг tmux установлен в ~/.config/tmux/tmux.conf"
 
 # Установка плагинов через TPM
-echo "➡️ Устанавливаем tmux плагины через TPM..."
+echo "➡️ Устанавливаем tmux плагины..."
 
-# Временно запускаем скрытую tmux-сессию, чтобы выполнить install_plugins.sh
 tmux new-session -d -s __plugin_install_session "sleep 1; ~/.tmux/plugins/tpm/scripts/install_plugins.sh"
 sleep 2
 tmux kill-session -t __plugin_install_session || true
